@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -37,21 +36,28 @@
     </div>
 </nav>
 
-<br>
-<br>
+
 <div class="container">
-<form action="#" th:action="@{/processdepartment}" th:object="${department}" method="post">
-    <input type="hidden" th:field="*{id}"/>
-    <h1>Department</h1>
-    Name: <input type="text" th:field="*{name}"><br />
-    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span><br />
 
-    Location: <input type="text" th:field="*{location}"><br />
-    <span th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></span><br />
+    <div >
+        <h2>All Departments </h2>
 
-    <input type="submit" value="Submit">
+        <h5>Name: <span style="text-align: left;font-size: 18px;
+            color: #fff421;" th:text="${department.name}"></span></h5>
+        <h5>Location: <span th:text="${department.location}"></span></h5>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <p th:href="@{/addemployees}"></p>
 
-</form>
+            <p th:each="employee: ${department.employees}">
+            <li th:inline="text"><b>[[${employee.name}]]: </b> [[${employee.title}]]</li>
+            </p>
+        </div>
+        <div class="col-md-3">
+            <a th:href="@{/update/{id}(id=${department.id})}" class="btn btn-outline-secondary">Update</a>
+        </div>
+    </div>
 </div>
 
 

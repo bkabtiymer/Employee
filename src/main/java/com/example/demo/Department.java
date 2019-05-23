@@ -14,7 +14,11 @@ import java.util.Set;
 
 //    @NotNull
 //    @Size(min = 2)
+    @Column (name="name")
     private String name;
+
+    @Column (name="location")
+    private String location;
 
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -36,6 +40,14 @@ import java.util.Set;
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public Set<Employee> getEmployees() {

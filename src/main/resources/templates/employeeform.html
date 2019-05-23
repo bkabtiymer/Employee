@@ -1,42 +1,79 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
->
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-</head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <nav th:fragment="navlinks" class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/" style="font-family: cursive; color: #fff421">Human Resources</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="/">Home</a>
+                <a class="nav-item nav-link" href="/adddepartment">Add Department</a>
+                <a class="nav-item nav-link" href="/">Department List</a>
+                <a class="nav-item nav-link" href="/addemployees">Add Employee</a>
+                <a class="nav-item nav-link" href="/">Employee List</a>
+            </div>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0"  type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+</head>
 <body>
 
-<br>
-<br>
-<br>
 
-<form action="#" th:action="@{/processemployee}" th:object="${employee}" method="post">
-    <input type="hidden" th:field="*{id}"/>
-    Department: <select name="department" id="department" class="customer-select" th:field="*{department}">
-    <option th:each="al: ${albums}"
-            th:value="${al.id}"
-            th:text="${al.name}">
-    </option><br/>
-</select>
-    <h4> Message Title :<textarea rows="2" th:field="*{title}"/>
-        <span th:if="${#fields.hasErrors('title')}"
-              th:errors="*{title}"></span><br/>
-        Content :<textarea rows="6" th:field="*{content}"/>
-        <span th:if="${#fields.hasErrors('content')}"
-              th:errors="*{content}"></span><br/>
-        Post Date :<input type="date" th:field="*{posteddate}"/>
-        <span th:if="${#fields.hasErrors('posteddate')}"
-              th:errors="*{posteddate}"></span><br/>
-        Posted By :<textarea rows="2" th:field="*{postedby}"/>
-        <span th:if="${#fields.hasErrors('postedby')}"
-              th:errors="*{postedby}"></span><br/>
-        <br/>
-        <a class="btn btn-outline-success my-2 my-sm-0" type="submit" >
-            <input type="submit" value="Submit"/></a>
-    </h4>
-</form>
+
+<div class="container">
+    <div>
+        <h2 > Employee </h2>
+    </div>
+    <div class="container">
+        <form action="#" th:action="@{/processemployee}" th:object="${employee}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <div>
+                Department: <select name="department" id="department" class="customer-select" th:field="*{department}">
+                <option th:each="depar: ${departments}"
+                        th:value="${depar.id}"
+                        th:text="${depar.name}">
+                </option>
+            </select>
+            </div>
+            <br/>
+            <div>
+                Name: <input type="text" th:field="*{name}"/>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+            <br/>
+            <div>
+                Title: <input type="text" th:field="*{job_title}"/>
+                <span th:if="${#fields.hasErrors('job_title')}" th:errors="*{job_title}"></span>
+            </div>
+            <br/>
+            <div>
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div><br/>
+</div>
+
+
+
 </body>
-
 </html>

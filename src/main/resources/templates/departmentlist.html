@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -16,6 +16,7 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
 </head>
+
 <body>
 <nav th:fragment="navlinks" class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/" style="font-family: cursive; color: #fff421">Human Resources</a>
@@ -24,7 +25,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="/">Home</a>
+            <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="/adddepartment">Add Department</a>
             <a class="nav-item nav-link" href="/">Department List</a>
             <a class="nav-item nav-link" href="/addemployees">Add Employee</a>
@@ -37,24 +38,36 @@
     </div>
 </nav>
 
-<br>
-<br>
-<div class="container">
-<form action="#" th:action="@{/processdepartment}" th:object="${department}" method="post">
-    <input type="hidden" th:field="*{id}"/>
-    <h1>Department</h1>
-    Name: <input type="text" th:field="*{name}"><br />
-    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span><br />
+</tr><div class="container">
+    <div>
+        <h2 >All Departments</h2>
+    </div>
+    <table class="table">
 
-    Location: <input type="text" th:field="*{location}"><br />
-    <span th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></span><br />
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Location</th>
 
-    <input type="submit" value="Submit">
+        </thead>
+        <tbody>
+        <tr th:each="department: ${departments}" >
+            <td th:text="${department.name}"></td>
+            <td th:text="${department.location}"></td>
 
-</form>
+            <td>
+                <div >
+                    <a th:href="@{/update/{id}(id=${department.id})}" class="btn btn-outline-secondary">Update</a>
+                    <a th:href="@{/detail/{id}(id=${department.id})}" class="btn btn-outline-secondary">Details</a>
+                    <a th:href="@{/delete/{id}(id=${department.id})}" class="btn btn-outline-danger">Delete</a>
+                    <a th:href="@{/addemployees}" class="btn btn-outline-secondary">Add Employee</a>
+                </div>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
 </div>
-
-
-
 </body>
 </html>

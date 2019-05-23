@@ -1,9 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.Department;
-import com.example.demo.DepartmentRepository;
-import com.example.demo.Employee;
-import com.example.demo.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,13 +21,13 @@ public class HomeController {
     @RequestMapping("/")
     public String listDepartment(Model model) {
         model.addAttribute("departments", departmentRepository.findAll());
-        return "list";
+        return "departmentlist";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/adddepartment")
     public String deparmentForm(Model model) {
         model.addAttribute("employee", employeeRepository.findAll());
-        model.addAttribute("department", departmentRepository.findAll());
+        model.addAttribute("department", new Department());
         return "departmentform";
     }
 
@@ -40,8 +36,6 @@ public class HomeController {
         if (result.hasErrors()) {
             model.addAttribute("employees", employeeRepository.findAll());
             return "departmentform";
-
-
         }
         departmentRepository.save(department);
         return "redirect:/";
@@ -52,7 +46,7 @@ public class HomeController {
     public String showDepartment(@PathVariable("id") long id, Model model) {
         model.addAttribute("department", departmentRepository.findById(id).get());
 
-        return "show";
+        return "employeelist";
     }
 
     @RequestMapping("/update/{id}")
@@ -60,7 +54,7 @@ public class HomeController {
         model.addAttribute("employees", employeeRepository.findAll());
 
         model.addAttribute("department", departmentRepository.findById(id).get());
-        return "albumform";
+        return "departmentform";
 
     }
 
@@ -83,7 +77,7 @@ public class HomeController {
         model.addAttribute("departments", departmentRepository.findAll());
         model.addAttribute("employee", new Employee());
 
-        return "songform";
+        return "employeeform";
     }
 
     @PostMapping("/processemployee")
@@ -96,5 +90,22 @@ public class HomeController {
         return "redirect:/";
     }
 
-}
+    @RequestMapping("/detail/employee/{id}")
+    public String showemployee(@PathVariable("id") long id, Model model){
+        model.addAttribute("departments", departmentRepository.findAll());
+        model.addAttribute("employee", employeeRepository.findById(id).get());
+
+        return "employeelist";
+    }
+    @RequestMapping("/update/employee{id}")
+    public String updateemployee(@PathVariable("id") long id, Model model){
+        model.addAttribute("employee", employeeRepository.findById(id).get());
+        return "employeeform";
+
+    }
+    @RequestMapping("/delete/employee{id}")
+    public  String delemployee(@PathVariable("id") long id){
+        employeeRepository.deleteById(id);
+        return "redirect:/";
+    }
 }

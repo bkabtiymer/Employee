@@ -8,20 +8,26 @@ import javax.validation.constraints.Size;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-//    @NotNull
-//    @Size(min=2)
+    @Column (name="employee_id")
     private long id;
-//    @NotNull
-//    @Size(min = 2)
+   @Column (name="name")
     private String name;
-//    @NotNull
-//    @Size(min = 2)
+
+    @Column (name="job_title")
     private String job_title;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name= "department_id")
     private Department department;
 
+    public Employee(String name, String job_title, Department department) {
+        this.name = name;
+        this.job_title = job_title;
+        this.department = department;
+    }
+
+    public Employee() {
+    }
 
     public long getId() {
         return id;
